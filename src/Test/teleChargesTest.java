@@ -19,6 +19,7 @@ public class teleChargesTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		jxl.Workbook read = null;
+		long phonenum;
 		int time;
 		int delay;
 		float lastyear;
@@ -28,7 +29,7 @@ public class teleChargesTest {
 		String payWay;
 		InputStream instream = null;
 		try {
-			instream = new FileInputStream(new File("E:/大三（下）/软件测试/话费用例测试1.xls"));
+			instream = new FileInputStream(new File("E:/大三（下）/软件测试/用例测试.xls"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -39,15 +40,17 @@ public class teleChargesTest {
 			int rows=sheet.getRows();	//获取总行数
 			System.out.println(rows);
 			//获取文件的输出流
-			WritableWorkbook wwb=Workbook.createWorkbook(new File("E:/大三（下）/软件测试/话费用例测试结果1.xls"),read);
+			WritableWorkbook wwb=Workbook.createWorkbook(new File("E:/大三（下）/软件测试/用例测试结果1.xls"),read);
 			WritableSheet ws=wwb.getSheet(0);
 			
 			//获取单元格的对象引用
 			for(int i=1;i<rows;i++){
-				Cell cell1=sheet.getCell(0,i);
-				Cell cell2=sheet.getCell(1,i);
-				Cell cell3=sheet.getCell(2, i);
-				Cell cell4=sheet.getCell(3,i);
+				Cell cell0=sheet.getCell(0,i);
+				Cell cell1=sheet.getCell(1,i);
+				Cell cell2=sheet.getCell(2,i);
+				Cell cell3=sheet.getCell(3, i);
+				Cell cell4=sheet.getCell(4,i);
+				phonenum=Long.parseLong(cell0.getContents());
 				time=Integer.parseInt(cell1.getContents());
 				delay=Integer.parseInt(cell2.getContents());
 				lastyear=Float.parseFloat(cell3.getContents());
@@ -64,9 +67,8 @@ public class teleChargesTest {
 					mMsg=mtelecharges.getMsg();
 					state=false;
 				}
-			
-				//暂用 i 的值代表用户 Id 和帐号信息
-				pay mPay=new pay(i,payWay,i,money,state);
+		
+				pay mPay=new pay(phonenum,payWay,i,money,state);
 //				System.out.println(mMsg);
 //				wc=ws.getWritableCell(2,i);
 //				if(wc.getType()==CellType.LABEL){
@@ -74,7 +76,7 @@ public class teleChargesTest {
 //					l.setString(mMsg);
 //				}
 				
-				Label lable=new Label(5,i,mMsg);
+				Label lable=new Label(6,i,mMsg);
 				ws.addCell(lable);
 				
 			}

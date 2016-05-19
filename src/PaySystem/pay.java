@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class pay {
 
-	private int cusID;
+	private long phonenum;
 	private int account;
 	private String payWay;
 	private float balance = 0;
@@ -18,8 +18,8 @@ public class pay {
 	private String filename;
 	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private boolean state;
-	public pay(int _id,String _payway,int _account,float _money,boolean _state){
-		cusID=_id;
+	public pay(long _phonenum,String _payway,int _account,float _money,boolean _state){
+		phonenum=_phonenum;
 		payWay=_payway;
 		account=_account;
 		if(balance==0){
@@ -41,12 +41,14 @@ public class pay {
 		
 	}
 	public void doPay(){
-		content="交易时间： "+df.format(new Date())+"\r\n用户Id： 	"+cusID+"\r\n支付方式：	 "+payWay+"\r\n"+payWay+"的账号为："+account+
+		content="交易时间： "+df.format(new Date())+"\r\n用户Id： 	"+phonenum+"\r\n支付方式：	 "+payWay+"\r\n"+payWay+"的账号为："+account+
 				"\r\n支付金额：	 "+money+"\r\n支付状态： 	"+getpayState()+"\r\n余额为 		"+balance;
 	}
 	
 	public void WriteLog(){
-		filename="E:/大三（下）/软件测试/PayList/"+cusID+".txt";	//历史文件记录消费历史
+//		System.out.println(phonenum);
+		
+		filename="E:/PayList/"+phonenum+".txt";	//历史文件记录消费历史
 		try{
 			FileWriter fw=new FileWriter(filename);	
 			fw.write(content);
